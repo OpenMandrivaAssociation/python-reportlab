@@ -1,13 +1,13 @@
-%define ver 1_19
+%define ver 2_1
 
 Summary: ReportLab library to create PDF documents using Python
-Name: python-reportlab
-Version: 2.0
+Name: 	 python-reportlab
+Version: 2.1
 Release: %mkrel 1
-URL: http://www.reportlab.org/
+URL: 	 http://www.reportlab.org/
 Source0: http://www.reportlab.org/ftp/ReportLab_%{ver}.tar.bz2
 License: BSD
-Group: Publishing
+Group: 	 Publishing
 BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: python-devel
 
@@ -31,7 +31,7 @@ Sample use cases are:
   * from XML to PDF in one step
 
 %prep
-%setup -q -n reportlab-%ver
+%setup -q -n reportlab_%ver
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 
 %build
@@ -53,6 +53,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc reportlab/docs
 %{py_platsitedir}/*
-
-
-
