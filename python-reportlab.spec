@@ -6,6 +6,7 @@ Version: 2.1
 Release: %mkrel 1
 URL: 	 http://www.reportlab.org/
 Source0: http://www.reportlab.org/ftp/ReportLab_%{ver}.tar.bz2
+Source1: rl_accel-0.61-daily-unix.tgz
 License: BSD
 Group: 	 Publishing
 BuildRoot: %{_tmppath}/%{name}-buildroot
@@ -32,6 +33,8 @@ Sample use cases are:
 
 %prep
 %setup -q -n reportlab_%ver
+tar zxf %SOURCE1
+mv rl_accel*/rl_accel reportlab/
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 
 %build
@@ -42,9 +45,9 @@ python setup.py build
 rm -rf $RPM_BUILD_ROOT
 cd reportlab
 python setup.py install --root=$RPM_BUILD_ROOT
-cd $RPM_BUILD_ROOT%_libdir/python*
-tar c reportlab | tar x -C site-packages
-rm -rf reportlab
+#cd $RPM_BUILD_ROOT%_libdir/python*
+#tar c reportlab | tar x -C site-packages
+#rm -rf reportlab
 
 %clean
 rm -rf $RPM_BUILD_ROOT
