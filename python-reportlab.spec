@@ -9,6 +9,7 @@ Source0: http://www.reportlab.org/ftp/ReportLab_%{ver}.tar.bz2
 Source1: rl_accel-0.61-daily-unix.tgz
 License: BSD
 Group: 	 Publishing
+BuildRoot: %{_tmppath}/%{name}-buildroot
 BuildRequires: python-devel
 
 %description
