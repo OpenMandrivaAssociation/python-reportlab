@@ -1,16 +1,21 @@
 %define ver 2_1
 
-Summary: ReportLab library to create PDF documents using Python
-Name: 	 python-reportlab
-Version: 2.1
-Release: %mkrel 1
-URL: 	 http://www.reportlab.org/
-Source0: http://www.reportlab.org/ftp/ReportLab_%{ver}.tar.bz2
-Source1: rl_accel-0.61-daily-unix.tgz
-License: BSD
-Group: 	 Publishing
-BuildRoot: %{_tmppath}/%{name}-buildroot
-BuildRequires: python-devel
+Summary:	ReportLab library to create PDF documents using Python
+Name:		python-reportlab
+Version:	2.1
+Release:	%mkrel 2
+URL:		http://www.reportlab.org/
+# Upstream tarball with Odyssey text and non-free font files replaced
+# Changes copied from Debian package - AdamW 2008/02
+Source0:	http://www.reportlab.org/ftp/ReportLab_%{ver}-fontclean.tar.lzma
+Source1:	rl_accel-0.61-daily-unix.tgz
+# From Debian, rediffed: changes source to use the free replacement 
+# fonts - AdamW 2008/02
+Patch0:		python-reportlab-2.1-fontclean.patch
+License:	BSD
+Group:		Publishing
+BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRequires:	python-devel
 
 %description
 ReportLab is a library that lets you directly create documents in
@@ -32,8 +37,9 @@ Sample use cases are:
   * from XML to PDF in one step
 
 %prep
-%setup -q -n reportlab_%ver
-tar zxf %SOURCE1
+%setup -q -n reportlab_%{ver}
+%patch0 -p0 -b .fontclean
+tar zxf %{SOURCE1}
 mv rl_accel*/rl_accel reportlab/
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 
@@ -42,17 +48,17 @@ cd reportlab
 python setup.py build
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 cd reportlab
-python setup.py install --root=$RPM_BUILD_ROOT
-#cd $RPM_BUILD_ROOT%_libdir/python*
+python setup.py install --root=%{buildroot} --compile --optimize=2
+#cd %{buildroot}%_libdir/python*
 #tar c reportlab | tar x -C site-packages
 #rm -rf reportlab
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc reportlab/docs
+%doc reportlab/license.txt reportlab/README reportlab/docs
 %{py_platsitedir}/*
