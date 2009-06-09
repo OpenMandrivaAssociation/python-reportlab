@@ -2,8 +2,8 @@
 
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
-Version:	2.2
-Release:	%mkrel 2
+Version:	2.3
+Release:	%mkrel 1
 URL:		http://www.reportlab.org/
 # Upstream tarball with Odyssey text and non-free font files replaced
 # Changes copied from Debian package - AdamW 2008/02
