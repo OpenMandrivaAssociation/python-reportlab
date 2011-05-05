@@ -12,6 +12,7 @@ Source1:	rl_accel-0.61-daily-unix.tgz
 # From Debian, rediffed: changes source to use the free replacement 
 # fonts - AdamW 2008/02
 Patch0:		python-reportlab-2.1-fontclean.patch
+Patch1:		python-reportlab-2.1-link.patch
 License:	BSD
 Group:		Publishing
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -39,6 +40,7 @@ Sample use cases are:
 %prep
 %setup -q -n reportlab_%{ver}
 %patch0 -p0 -b .fontclean
+%patch1 -p0 -b .link
 tar zxf %{SOURCE1}
 mv rl_accel*/rl_accel reportlab/
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
