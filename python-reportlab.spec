@@ -1,18 +1,16 @@
-%define ver 2_1
-
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
 Version:	2.5
-Release:	%mkrel 3
+Release:	%mkrel 4
 URL:		http://www.reportlab.org/
 # Upstream tarball with Odyssey text and non-free font files replaced
 # Changes copied from Debian package - AdamW 2008/02
-Source0:	http://www.reportlab.org/ftp/ReportLab_%{ver}-fontclean.tar.lzma
-Source1:	rl_accel-0.61-daily-unix.tgz
+Source0:	http://www.reportlab.org/ftp/reportlab-%{version}.tar.gz
+#Source1:	rl_accel-0.61-daily-unix.tgz
 # From Debian, rediffed: changes source to use the free replacement 
 # fonts - AdamW 2008/02
 Patch0:		python-reportlab-2.1-fontclean.patch
-Patch1:		python-reportlab-2.1-link.patch
+Patch1:		reportlab-2.5-fix_build.patch
 License:	BSD
 Group:		Publishing
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -38,29 +36,22 @@ Sample use cases are:
   * from XML to PDF in one step
 
 %prep
-%setup -q -n reportlab_%{ver}
-%patch0 -p0 -b .fontclean
-%patch1 -p0 -b .link
-tar zxf %{SOURCE1}
-mv rl_accel*/rl_accel reportlab/
+%setup -q -n reportlab-%{version}
+%patch1 -p1 -b .link
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 
 %build
-cd reportlab
 python setup.py build
 
 %install
 rm -rf %{buildroot}
-cd reportlab
 python setup.py install --root=%{buildroot} --compile --optimize=2
-#cd %{buildroot}%_libdir/python*
-#tar c reportlab | tar x -C site-packages
-#rm -rf reportlab
+rm -rf $RPM_BUILD_ROOT}%{py_platsitedir}/reportlab/fonts
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc reportlab/license.txt reportlab/README 
+%doc LICENSE.txt README.txt
 %{py_platsitedir}/*
