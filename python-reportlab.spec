@@ -47,7 +47,7 @@ python setup.py build
 %install
 rm -rf %{buildroot}
 python setup.py install --root=%{buildroot} --compile --optimize=2
-rm -rf $RPM_BUILD_ROOT}%{py_platsitedir}/reportlab/fonts
+rm -rf %{buildroot}}%{py_platsitedir}/reportlab/fonts
 
 %clean
 rm -rf %{buildroot}
