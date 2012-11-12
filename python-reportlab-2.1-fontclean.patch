@@ -1,0 +1,527 @@
+--- reportlab/graphics/testshapes.py.fontclean	2008-12-25 14:29:26.000000000 +0100
++++ reportlab/graphics/testshapes.py	2008-12-25 14:29:26.000000000 +0100
+@@ -383,7 +383,7 @@
+     on the font patch given in rl_config.py,
+     for example in reportlab/lib/fonts/.
+     """
+-    faceName = "LettErrorRobot-Chrome"
++    faceName = "Wargames-Regular"
+     D = Drawing(400, 200)
+     for size in range(12, 36, 4):
+         D.add(String(10+size*2,
+--- reportlab/tools/docco/examples.py.fontclean	2008-12-25 14:29:26.000000000 +0100
++++ reportlab/tools/docco/examples.py	2008-12-25 14:29:26.000000000 +0100
+@@ -461,16 +461,16 @@
+     from reportlab.pdfbase import pdfmetrics
+     afmFile, pfbFile = rl_doc_utils.getJustFontPaths()
+     justFace = pdfmetrics.EmbeddedType1Face(afmFile, pfbFile)
+-    faceName = 'LettErrorRobot-Chrome' # pulled from AFM file
++    faceName = 'Wargames' # pulled from AFM file
+     pdfmetrics.registerTypeFace(justFace)
+-    justFont = pdfmetrics.Font('LettErrorRobot-Chrome',
++    justFont = pdfmetrics.Font('Wargames',
+                                faceName,
+                                'WinAnsiEncoding')
+     pdfmetrics.registerFont(justFont)
+ 
+-    canvas.setFont('LettErrorRobot-Chrome', 32)
++    canvas.setFont('Wargames', 32)
+     canvas.drawString(10, 150, 'This should be in')
+-    canvas.drawString(10, 100, 'LettErrorRobot-Chrome')
++    canvas.drawString(10, 100, 'Wargames')
+ """
+ 
+ testttffont1 = """
+@@ -480,12 +480,12 @@
+     reportlab.rl_config.warnOnMissingFontGlyphs = 0
+     from reportlab.pdfbase import pdfmetrics
+     from reportlab.pdfbase.ttfonts import TTFont
+-    pdfmetrics.registerFont(TTFont('Rina', 'rina.ttf'))
++    pdfmetrics.registerFont(TTFont('PenguinAttack', 'PenguinAttack.ttf'))
+     from reportlab.pdfgen.canvas import Canvas
+ 
+-    canvas.setFont('Rina', 32)
++    canvas.setFont('PenguinAttack', 24)
+     canvas.drawString(10, 150, "Some UTF-8 text encoded")
+-    canvas.drawString(10, 100, "in the Rina TT Font!")
++    canvas.drawString(10, 100, "in the PenguinAttack TT Font!")
+ """
+ 
+ testcursormoves1 = """
+--- reportlab/tools/docco/rl_doc_utils.py.fontclean	2008-12-25 14:29:26.000000000 +0100
++++ reportlab/tools/docco/rl_doc_utils.py	2008-12-25 14:29:26.000000000 +0100
+@@ -102,7 +102,7 @@
+     '''return afm and pfb for Just's files'''
+     import reportlab
+     folder = os.path.dirname(reportlab.__file__) + os.sep + 'fonts'
+-    return os.path.join(folder, 'LeERC___.AFM'), os.path.join(folder, 'LeERC___.PFB')
++    return os.path.join(folder, 'Wargames.afm'), os.path.join(folder, 'Wargames.pfb')
+ 
+ # for testing
+ def NOP(*x,**y):
+--- reportlab/docs/graphguide/ch3_shapes.py.fontclean	2008-12-25 14:29:27.000000000 +0100
++++ reportlab/docs/graphguide/ch3_shapes.py	2008-12-25 14:29:27.000000000 +0100
+@@ -224,7 +224,7 @@
+ disc("""
+ Here is a more fancy example using the code snippet below.
+ Please consult the ReportLab User Guide to see how non-standard
+-like 'LettErrorRobot-Chrome' fonts are being registered!
++like 'Wargames' fonts are being registered!
+ """)
+ 
+ eg("""
+@@ -239,7 +239,7 @@
+                  fontSize=36))
+ 
+     d.add(String(150, 160, 'Hello World',
+-                 fontName='LettErrorRobot-Chrome',
++                 fontName='Wargames',
+                  fontSize=36))
+ """)
+ 
+@@ -248,7 +248,7 @@
+ rl_config.warnOnMissingFontGlyphs = 0
+ afmFile, pfbFile = getJustFontPaths()
+ T1face = pdfmetrics.EmbeddedType1Face(afmFile, pfbFile)
+-T1faceName = 'LettErrorRobot-Chrome'
++T1faceName = 'Wargames'
+ pdfmetrics.registerTypeFace(T1face)
+ T1font = pdfmetrics.Font(T1faceName, T1faceName, 'WinAnsiEncoding')
+ pdfmetrics.registerFont(T1font)
+@@ -264,7 +264,7 @@
+              fontSize=36))
+ 
+ d.add(String(150, 160, 'Hello World',
+-             fontName='LettErrorRobot-Chrome',
++             fontName='Wargames',
+              fontSize=36))
+ 
+ draw(d, 'fancy font example')
+--- reportlab/docs/userguide/ch2a_fonts.py.fontclean	2008-12-25 14:29:27.000000000 +0100
++++ reportlab/docs/userguide/ch2a_fonts.py	2008-12-25 14:29:27.000000000 +0100
+@@ -117,7 +117,10 @@
+ font named <i>LettErrorRobot-Chrome</i> which we may
+ use for testing and/or documenting purposes (and which you may
+ use as well). It comes bundled with the ReportLab distribution in the
+-directory $reportlab/fonts$.
++directory $reportlab/fonts$ This font can't be shipped with the 
++Mandriva package of ReportLab, since it license is not free. Instead,
++we use an subset of Dustin Norlander's font <i>Wargames</i>, which
++can be distributed freely (under the terms of the GPL).
+ """)
+ 
+ disc("""
+@@ -127,7 +130,7 @@
+ ('glyphs') in the font such as height, width, bounding box info and
+ other 'metrics', while the latter is a binary file that describes the
+ shapes of the font. The $reportlab/fonts$ directory contains the files
+-$'LeERC___.AFM'$ and $'LeERC___.PFB'$ that are used as an example
++$'Wargames.afm'$ and $'Wargames.pfb'$ that are used as an example
+ font.
+ """)
+ 
+@@ -142,21 +145,21 @@
+ import os
+ import reportlab
+ folder = os.path.dirname(reportlab.__file__) + os.sep + 'fonts'
+-afmFile = os.path.join(folder, 'LeERC___.AFM')
+-pfbFile = os.path.join(folder, 'LeERC___.PFB')
++afmFile = os.path.join(folder, 'Wargames.afm')
++pfbFile = os.path.join(folder, 'Wargames.pfb')
+ 
+ from reportlab.pdfbase import pdfmetrics
+ justFace = pdfmetrics.EmbeddedType1Face(afmFile, pfbFile)
+-faceName = 'LettErrorRobot-Chrome' # pulled from AFM file
++faceName = 'Wargames' # pulled from AFM file
+ pdfmetrics.registerTypeFace(justFace)
+-justFont = pdfmetrics.Font('LettErrorRobot-Chrome',
++justFont = pdfmetrics.Font('Wargames',
+                            faceName,
+                            'WinAnsiEncoding')
+ pdfmetrics.registerFont(justFont)
+ 
+-canvas.setFont('LettErrorRobot-Chrome', 32)
++canvas.setFont('Wargames', 32)
+ canvas.drawString(10, 150, 'This should be in')
+-canvas.drawString(10, 100, 'LettErrorRobot-Chrome')
++canvas.drawString(10, 100, 'Wargames')
+ """)
+ 
+ 
+@@ -201,7 +204,7 @@
+ """)
+ 
+ disc("""
+-In the <i>LettErrorRobot-Chrome</i> example we explicitely specified
++In the <i>Wargames</i> example we explicitely specified
+ the place of the font description files to be loaded.
+ In general, you'll prefer to store your fonts in some canonic
+ locations and make the embedding mechanism aware of them.
+@@ -299,12 +302,12 @@
+ 
+ from reportlab.pdfbase import pdfmetrics
+ from reportlab.pdfbase.ttfonts import TTFont
+-pdfmetrics.registerFont(TTFont('Rina', 'rina.ttf'))
+-canvas.setFont(Rina, 32)
++pdfmetrics.registerFont(TTFont('PenguinAttack', 'PenguinAttack.ttf'))
++canvas.setFont(PenguinAttack, 24)
+ canvas.drawString(10, 150, "Some text encoded in UTF-8")
+-canvas.drawString(10, 100, "In the Rina TT Font!")
++canvas.drawString(10, 100, "In the PenguinAttack TT Font!")
+ """)
+-illust(examples.ttffont1, "Using a the Rina TrueType Font")
++illust(examples.ttffont1, "Using a the PenguinAttack TrueType Font")
+ disc("""In the above example the true type font object is created using""")
+ eg("""
+     TTFont(name,filename)
+@@ -318,29 +321,29 @@
+ from reportlab.lib.styles import ParagraphStyle
+ 
+ from reportlab.lib.fonts import addMapping
+-addMapping('Rina', 0, 0, 'Rina')
+-addMapping('Rina', 0, 1, 'Rina')
+-addMapping('Rina', 1, 0, 'Rina')
+-addMapping('Rina', 1, 1, 'Rina')
++addMapping('PenguinAttack', 0, 0, 'PenguinAttack')
++addMapping('PenguinAttack', 0, 1, 'PenguinAttack')
++addMapping('PenguinAttack', 1, 0, 'PenguinAttack')
++addMapping('PenguinAttack', 1, 1, 'PenguinAttack')
+ 
+ disc("""Before using the TT Fonts in Platypus we should add a mapping from the family name to the
+ individual font names that describe the behaviour under the $<b>$ and $<i>$ attributes.""")
+ 
+ eg("""
+ from reportlab.lib.fonts import addMapping
+-addMapping('Rina', 0, 0, 'Rina')    #normal
+-addMapping('Rina', 0, 1, 'Rina')    #italic
+-addMapping('Rina', 1, 0, 'Rina')    #bold
+-addMapping('Rina', 1, 1, 'Rina')    #italic and bold
++addMapping('PenguinAttack', 0, 0, 'PenguinAttack')    #normal
++addMapping('PenguinAttack', 0, 1, 'PenguinAttack')    #italic
++addMapping('PenguinAttack', 1, 0, 'PenguinAttack')    #bold
++addMapping('PenguinAttack', 1, 1, 'PenguinAttack')    #italic and bold
+ """)
+ 
+-disc("""We only have a Rina regular font, no bold or italic, so we must map all to the
++disc("""We only have a PenguinAttack regular font, no bold or italic, so we must map all to the
+ same internal fontname.  ^&lt;b&gt;^ and ^&lt;i&gt;^ tags may now be used safely, but
+ have no effect.
+ After registering and mapping
+-the Rina font as above we can use paragraph text like""")
++the PenguinAttack font as above we can use paragraph text like""")
+ parabox2("""<font name="Times-Roman" size="14">This is in Times-Roman</font>
+-<font name="Rina" color="magenta" size="14">and this is in magenta <b>Rina!</b></font>""","Using TTF fonts in paragraphs")
++<font name="PenguinAttack" color="magenta" size="14">and this is in magenta <b>PenguinAttack!</b></font>""","Using TTF fonts in paragraphs")
+ 
+ 
+ 
+--- reportlab/docs/userguide/ch1_intro.py.fontclean	2008-12-25 14:29:27.000000000 +0100
++++ reportlab/docs/userguide/ch1_intro.py	2008-12-25 14:29:27.000000000 +0100
+@@ -150,6 +150,10 @@
+ are glad to include these in the toolkit. Finally we thank Bigelow &amp; Holmes Inc ($design@bigelowandholmes.com$)
+ for Luxi Serif Regular and Ray Larabie ($http://www.larabiefonts.com$) for the Rina TrueType font.""")
+ 
++disc("""Remark regarding the Mandriva package: Sadly, these three fonts have non-free
++licenses and therefore are not provided with the Mandriva package of ReportLab. The Mandriva package
++replaces this fonts with GPL fonts by Dustin Norlander.""")
++
+ heading2("Installation and Setup")
+ 
+ disc("""
+--- reportlab/setup.py.fontclean	2008-12-25 14:29:27.000000000 +0100
++++ reportlab/setup.py	2008-12-25 14:29:26.000000000 +0100
+@@ -143,19 +143,17 @@
+         'docs/userguide/testfile.txt',
+ 
+         'extensions/README',
+-        
+-        'fonts/00readme.txt',
+-        'fonts/bitstream-vera-license.txt',
+-        'fonts/LeERC___.AFM',
+-        'fonts/LeERC___.PFB',
+-        'fonts/luxiserif.ttf',
+-        'fonts/luxiserif_license.txt',
+-        'fonts/rina.ttf',
+-        'fonts/rina_license.txt',
+-        'fonts/Vera.ttf',
+-        'fonts/VeraBd.ttf',
+-        'fonts/VeraBI.ttf',
+-        'fonts/VeraIt.ttf',
++
++	'fonts/00readme.txt',
++	'fonts/bitstream-vera-license.txt',
++	'fonts/Dustismo_Roman.ttf',
++	'fonts/PenguinAttack.ttf',
++	'fonts/VeraBd.ttf',
++	'fonts/VeraBI.ttf',
++	'fonts/VeraIt.ttf',
++	'fonts/Vera.ttf',
++	'fonts/Wargames.afm',
++	'fonts/Wargames.pfb',
+ 
+         'test/pythonpowered.gif',
+ 
+@@ -167,8 +165,8 @@
+         'tools/pythonpoint/README',
+         'tools/pythonpoint/pythonpoint.dtd',
+         'tools/pythonpoint/demos/htu.xml',
+-        'tools/pythonpoint/demos/LeERC___.AFM',
+-        'tools/pythonpoint/demos/LeERC___.PFB',
++#        'tools/pythonpoint/demos/LeERC___.AFM',
++#        'tools/pythonpoint/demos/LeERC___.PFB',
+         'tools/pythonpoint/demos/leftlogo.a85',
+         'tools/pythonpoint/demos/leftlogo.gif',
+         'tools/pythonpoint/demos/lj8100.jpg',
+--- reportlab/test/test_pdfbase_ttfonts.py.fontclean	2008-12-25 14:29:27.000000000 +0100
++++ reportlab/test/test_pdfbase_ttfonts.py	2008-12-25 14:29:27.000000000 +0100
+@@ -1,8 +1,8 @@
+ 
+ """Test TrueType font subsetting & embedding code.
+ 
+-This test uses a sample font (luxiserif.ttf) taken from XFree86 which is called Luxi
+-Serif Regular and is covered under the license in ../fonts/luxiserif_licence.txt.
++This test uses a sample font by Dustin Norlander (Dustismo_Roman.ttf).
++The font is free and can be distributed under the terms of the GPL.
+ """
+ 
+ import string
+@@ -63,7 +63,7 @@
+     c.drawString(100,700, 'Unicode TrueType Font Test %d pages' % npages)
+     # Draw a table of Unicode characters
+     for p in xrange(npages):
+-        for fontName in ('TestFont','RinaFont'):
++        for fontName in ('TestFont','PenguinFont'):
+             c.setFont(fontName, 10)
+             for i in xrange(32):
+                 for j in xrange(32):
+@@ -77,8 +77,8 @@
+ 
+     def testTTF(self):
+         "Test PDF generation with TrueType fonts"
+-        pdfmetrics.registerFont(TTFont("TestFont", "luxiserif.ttf"))
+-        pdfmetrics.registerFont(TTFont("RinaFont", "rina.ttf"))
++         pdfmetrics.registerFont(TTFont("TestFont", "Dustismo_Roman.ttf"))
++         pdfmetrics.registerFont(TTFont("PenguinFont", "PenguinAttack.ttf"))
+         _simple_subset_generation('test_pdfbase_ttfonts1.pdf',1)
+         _simple_subset_generation('test_pdfbase_ttfonts3.pdf',3)
+         _simple_subset_generation('test_pdfbase_ttfonts35.pdf',3,5)
+@@ -123,16 +123,16 @@
+ 
+     def testFontFile(self):
+         "Tests TTFontFile and TTF parsing code"
+-        ttf = TTFontFile("luxiserif.ttf")
+-        self.assertEquals(ttf.name, "LuxiSerif")
++        ttf = TTFontFile("Dustismo_Roman.ttf")
++        self.assertEquals(ttf.name, "DustismoRoman")
+         self.assertEquals(ttf.flags, FF_SYMBOLIC)
+         self.assertEquals(ttf.italicAngle, 0.0)
+-        self.assertNear(ttf.ascent,783.203125)    # FIXME: or 992?
+-        self.assertNear(ttf.descent,-205.078125)    # FIXME: or -210?
+-        self.assertEquals(ttf.capHeight, 0)
+-        self.assertNear(ttf.bbox, [-203.125, -210.9375, 983.3984375, 992.67578125])
++        self.assertEquals(ttf.ascent, 712)
++        self.assertEquals(ttf.descent, -238)
++        self.assertEquals(ttf.capHeight, 712)
++        self.assertEquals(ttf.bbox, [-113, -256, 923, 1051])
+         self.assertEquals(ttf.stemV, 87)
+-        self.assertEquals(ttf.defaultWidth, 250)
++        self.assertEquals(ttf.defaultWidth, 500)
+ 
+     def testAdd32(self):
+         "Test add32"
+@@ -158,7 +158,7 @@
+ 
+     def testFontFileChecksum(self):
+         "Tests TTFontFile and TTF parsing code"
+-        file = TTFOpenFile("luxiserif.ttf")[1].read()
++        file = TTFOpenFile("Dustismo_Roman.ttf")[1].read()
+         TTFontFile(StringIO(file), validate=1) # should not fail
+         file1 = file[:12345] + "\xFF" + file[12346:] # change one byte
+         self.assertRaises(TTFError, TTFontFile, StringIO(file1), validate=1)
+@@ -167,7 +167,7 @@
+ 
+     def testSubsetting(self):
+         "Tests TTFontFile and TTF parsing code"
+-        ttf = TTFontFile("luxiserif.ttf")
++        ttf = TTFontFile("Dustismo_Roman.ttf")
+         subset = ttf.makeSubset([0x41, 0x42])
+         subset = TTFontFile(StringIO(subset), 0)
+         for tag in ('cmap', 'head', 'hhea', 'hmtx', 'maxp', 'name', 'OS/2',
+@@ -179,13 +179,13 @@
+             pos = subset.read_ushort()    # this is actually offset / 2
+             self.failIf(pos % 2 != 0, "glyph %d at +%d should be long aligned" % (n, pos * 2))
+ 
+-        self.assertEquals(subset.name, "LuxiSerif")
++        self.assertEquals(subset.name, "DustismoRoman")
+         self.assertEquals(subset.flags, FF_SYMBOLIC)
+         self.assertEquals(subset.italicAngle, 0.0)
+-        self.assertNear(subset.ascent,783.203125)       # FIXME: or 992?
+-        self.assertNear(subset.descent,-205.078125)     # FIXME: or -210?
+-        self.assertEquals(subset.capHeight, 0)
+-        self.assertNear(subset.bbox, [-203.125, -210.9375, 983.3984375, 992.67578125])
++        self.assertEquals(subset.ascent, 712)
++        self.assertEquals(subset.descent, -238)
++        self.assertEquals(subset.capHeight, 712)
++        self.assertEquals(subset.bbox, [-113, -256, 923, 1051])
+         self.assertEquals(subset.stemV, 87)
+ 
+     def testFontMaker(self):
+@@ -205,7 +205,7 @@
+ 
+     def testAddSubsetObjects(self):
+         "Tests TTFontFace.addSubsetObjects"
+-        face = TTFontFace("luxiserif.ttf")
++        face = TTFontFace("Dustismo_Roman.ttf")
+         doc = PDFDocument()
+         fontDescriptor = face.addSubsetObjects(doc, "TestFont", [ 0x78, 0x2017 ])
+         fontDescriptor = doc.idToObject[fontDescriptor.name].dict
+@@ -243,7 +243,7 @@
+ 
+     def testStringWidth(self):
+         "Test TTFont.stringWidth"
+-        font = TTFont("TestFont", "luxiserif.ttf")
++        font = TTFont("TestFont", "Dustismo_Roman.ttf")
+         self.assert_(font.stringWidth("test", 10) > 0)
+         width = font.stringWidth(utf8(0x2260) * 2, 1000)
+         expected = font.face.getCharWidth(0x2260) * 2
+@@ -252,7 +252,7 @@
+     def testSplitString(self):
+         "Tests TTFont.splitString"
+         doc = PDFDocument()
+-        font = TTFont("TestFont", "luxiserif.ttf")
++        font = TTFont("TestFont", "Dustismo_Roman.ttf")
+         text = string.join(map(utf8, xrange(0, 511)), "")
+         allchars = string.join(map(chr, xrange(0, 256)), "")
+         nospace = allchars[:32] + allchars[33:]
+@@ -284,7 +284,7 @@
+     def testSubsetInternalName(self):
+         "Tests TTFont.getSubsetInternalName"
+         doc = PDFDocument()
+-        font = TTFont("TestFont", "luxiserif.ttf")
++        font = TTFont("TestFont", "Dustismo_Roman.ttf")
+         # Actually generate some subsets
+         text = string.join(map(utf8, range(0, 513)), "")
+         font.splitString(text, doc)
+@@ -297,7 +297,7 @@
+ 
+     def testAddObjectsEmpty(self):
+         "TTFont.addObjects should not fail when no characters were used"
+-        font = TTFont("TestFont", "luxiserif.ttf")
++        font = TTFont("TestFont", "Dustismo_Roman.ttf")
+         doc = PDFDocument()
+         font.addObjects(doc)
+ 
+@@ -305,7 +305,7 @@
+         "Test that TTFont.addObjects resets the font"
+         # Actually generate some subsets
+         doc = PDFDocument()
+-        font = TTFont("TestFont", "luxiserif.ttf")
++        font = TTFont("TestFont", "Dustismo_Roman.ttf")
+         font.splitString('a', doc)            # create some subset
+         doc = PDFDocument()
+         font.addObjects(doc)
+@@ -319,7 +319,7 @@
+         "Test that TTFont can be used for different documents at the same time"
+         doc1 = PDFDocument()
+         doc2 = PDFDocument()
+-        font = TTFont("TestFont", "luxiserif.ttf")
++        font = TTFont("TestFont", "Dustismo_Roman.ttf")
+         self.assertEquals(font.splitString(u'hello ', doc1), [(0, 'hello ')])
+         self.assertEquals(font.splitString(u'hello ', doc2), [(0, 'hello ')])
+         self.assertEquals(font.splitString(u'\u0410\u0411'.encode('UTF-8'), doc1), [(0, '\x80\x81')])
+@@ -332,14 +332,14 @@
+         "Test TTFont.addObjects"
+         # Actually generate some subsets
+         doc = PDFDocument()
+-        font = TTFont("TestFont", "luxiserif.ttf")
++        font = TTFont("TestFont", "Dustismo_Roman.ttf")
+         font.splitString('a', doc)            # create some subset
+         internalName = font.getSubsetInternalName(0, doc)[1:]
+         font.addObjects(doc)
+         pdfFont = doc.idToObject[internalName]
+         self.assertEquals(doc.idToObject['BasicFonts'].dict[internalName], pdfFont)
+         self.assertEquals(pdfFont.Name, internalName)
+-        self.assertEquals(pdfFont.BaseFont, "AAAAAA+LuxiSerif")
++        self.assertEquals(pdfFont.BaseFont, "AAAAAA+DustismoRoman")
+         self.assertEquals(pdfFont.FirstChar, 0)
+         self.assertEquals(pdfFont.LastChar, 127)
+         self.assertEquals(len(pdfFont.Widths.sequence), 128)
+--- reportlab/test/test_platypus_general.py.fontclean	2008-12-25 14:29:27.000000000 +0100
++++ reportlab/test/test_platypus_general.py	2008-12-25 14:29:27.000000000 +0100
+@@ -461,14 +461,14 @@
+     #######################################################################
+     #     Examples Page 4 - custom fonts
+     #######################################################################
+-    # custom font with LettError-Robot font
++    # custom font with Wargames font
+     import reportlab.rl_config
+     reportlab.rl_config.warnOnMissingFontGlyphs = 0
+ 
+     from reportlab.pdfbase import pdfmetrics
+     fontDir = os.path.join(os.path.dirname(reportlab.__file__),'fonts')
+-    face = pdfmetrics.EmbeddedType1Face(os.path.join(fontDir,'LeERC___.AFM'),os.path.join(fontDir,'LeERC___.PFB'))
+-    faceName = face.name  # should be 'LettErrorRobot-Chrome'
++    face = pdfmetrics.EmbeddedType1Face(os.path.join(fontDir,'LeERC___.AFM'),os.path.join(fontDir,'Wargames.pfb'))
++    faceName = face.name  # should be 'Wargames'
+     pdfmetrics.registerTypeFace(face)
+     font = pdfmetrics.Font(faceName, faceName, 'WinAnsiEncoding')
+     pdfmetrics.registerFont(font)
+@@ -478,18 +478,18 @@
+     story.append(Paragraph(
+         """This is an ordinary paragraph, which happens to contain
+         text in an embedded font:
+-        <font name="LettErrorRobot-Chrome">LettErrorRobot-Chrome</font>.
++        <font name="Wargames">Wargames</font>.
+         Now for the real challenge...""", styleSheet['Normal']))
+ 
+ 
+-    styRobot = ParagraphStyle('Robot', styleSheet['Normal'])
+-    styRobot.fontSize = 16
+-    styRobot.leading = 20
+-    styRobot.fontName = 'LettErrorRobot-Chrome'
++    styWargames = ParagraphStyle('Wargames', styleSheet['Normal'])
++    styWargames.fontSize = 16
++    styWargames.leading = 20
++    styWargames.fontName = 'Wargames'
+ 
+     story.append(Paragraph(
+-                "This whole paragraph is 16-point Letterror-Robot-Chrome.",
+-                styRobot))
++                "This whole paragraph is 16-point Wargames.",
++                styWargames))
+     story.append(FrameBreak())
+ 
+     if _GIF:
+--- reportlab/test/test_pdfbase_fontembed.py.fontclean	2008-12-25 14:29:27.000000000 +0100
++++ reportlab/test/test_pdfbase_fontembed.py	2008-12-25 14:29:27.000000000 +0100
+@@ -16,7 +16,11 @@
+ 
+         Just vam Rossum has kindly donated a font which we may use
+         for testing purposes.  You need to contact him at just@letterror.com
+-        if you want to use it for real."""
++        if you want to use it for real.
++	
++	Message from the Mandriva package maintainer: The Mandriva package
++	can't ship Just's font, therefore we have replaced it with a subset 
++	of a free font by Dustin Norlander, Wargames."""
+ 
+         #LettError fonts should always be there.  The others are voluntary.
+ 
+@@ -67,14 +71,14 @@
+ ##        justFont = pdfmetrics.Font('LettErrorRobot-Chrome', faceName, 'WinAnsiEncoding')
+ ##        pdfmetrics.registerFont(justFont)
+ 
+-        c.setFont('LettErrorRobot-Chrome', 12)
+-        c.drawString(100, y, 'This should be in LettErrorRobot-Chrome')
++        c.setFont('Wargames', 12)
++        c.drawString(100, y, 'This should be in Wargames')
+ 
+         def testNamedFont(canv, fontName):
+             canv.showPage()
+             makeWidthTestForAllGlyphs(canv, fontName, outlining=0)
+ 
+-        testNamedFont(c, 'LettErrorRobot-Chrome')
++        testNamedFont(c, 'Wargames')
+ 
+         c.save()
+ 

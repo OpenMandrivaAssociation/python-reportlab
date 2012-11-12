@@ -1,0 +1,19 @@
+--- reportlab-2.5/setup.py.fix_build	2011-08-31 14:57:59.435580818 -0300
++++ reportlab-2.5/setup.py	2011-08-31 14:58:27.645923525 -0300
+@@ -277,7 +277,7 @@ def main():
+                                 include_dirs=[],
+                             define_macros=[],
+                             library_dirs=[],
+-                            libraries=[], # libraries to link against
++                            libraries=["m"], # libraries to link against
+                             ),
+                     Extension( 'sgmlop',
+                             [pjoin(RL_ACCEL,'sgmlop.c')],
+@@ -398,6 +398,7 @@ def main():
+             infoline('# If you need truetype support in renderPM')
+             infoline('# You may need to edit setup.cfg (win32)')
+             infoline('# or edit this file to access the library if it is installed')
++        FT_LIB.append("m")
+         EXT_MODULES +=  [Extension( '_renderPM',
+                                         SOURCES,
+                                         include_dirs=[RENDERPM,LIBART_DIR,GT1_DIR]+FT_INC_DIR,
