@@ -11,10 +11,9 @@ Source0:	http://www.reportlab.org/ftp/reportlab-%{version}.tar.gz
 # fonts - AdamW 2008/02
 Patch0:		python-reportlab-2.1-fontclean.patch
 Patch1:		reportlab-2.5-fix_build.patch
-BuildRequires: freetype2-devel
+BuildRequires:	pkgconfig(freetype2)
 License:	BSD
 Group:		Publishing
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 %py_requires -d
 
 %description
