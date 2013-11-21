@@ -2,18 +2,17 @@ Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
 Version:	2.6
 Release:	1
-URL:		http://www.reportlab.org/
+License:	BSD
+Group:		Publishing
+Url:		http://www.reportlab.org/
 # Upstream tarball with Odyssey text and non-free font files replaced
 # Changes copied from Debian package - AdamW 2008/02
 Source0:	http://www.reportlab.org/ftp/reportlab-%{version}.tar.gz
 #Source1:	rl_accel-0.61-daily-unix.tgz
 # From Debian, rediffed: changes source to use the free replacement 
 # fonts - AdamW 2008/02
-Patch0:		python-reportlab-2.1-fontclean.patch
 Patch1:		reportlab-2.5-fix_build.patch
 BuildRequires:	pkgconfig(freetype2)
-License:	BSD
-Group:		Publishing
 %py_requires -d
 
 %description
@@ -36,22 +35,18 @@ Sample use cases are:
   * from XML to PDF in one step
 
 %prep
-%setup -q -n reportlab-%{version}
-%patch1 -p1 -b .link
+%setup -qn reportlab-%{version}
+%apply_patches
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 
 %build
 python setup.py build
 
 %install
-rm -rf %{buildroot}
 python setup.py install --root=%{buildroot} --compile --optimize=2
 rm -rf %{buildroot}}%{py_platsitedir}/reportlab/fonts
 
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc LICENSE.txt README.txt
 %{py_platsitedir}/*
+
