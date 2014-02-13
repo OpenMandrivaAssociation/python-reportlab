@@ -12,9 +12,10 @@ Source0:	http://www.reportlab.org/ftp/reportlab-%{version}.tar.gz
 Patch0:		python-reportlab-2.1-fontclean.patch
 Patch1:		reportlab-2.5-fix_build.patch
 BuildRequires:	pkgconfig(freetype2)
+BuildRequires:  python-devel
 License:	BSD
 Group:		Publishing
-%py_requires -d
+
 
 %description
 ReportLab is a library that lets you directly create documents in
