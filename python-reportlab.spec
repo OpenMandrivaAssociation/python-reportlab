@@ -1,7 +1,7 @@
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
 Version:	2.6
-Release:	5
+Release:	6
 License:	BSD
 Group:		Publishing
 Url:		http://www.reportlab.org/
@@ -13,7 +13,7 @@ Source0:	http://www.reportlab.org/ftp/reportlab-%{version}.tar.gz
 # fonts - AdamW 2008/02
 Patch1:		reportlab-2.5-fix_build.patch
 BuildRequires:	pkgconfig(freetype2)
-%py_requires -d
+BuildRequires:  python-devel
 
 %description
 ReportLab is a library that lets you directly create documents in
