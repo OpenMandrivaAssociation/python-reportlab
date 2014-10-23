@@ -43,7 +43,7 @@ find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@
 %{__python2} setup.py build
 
 %install
-%{__python2}setup.py install --root=%{buildroot} --compile --optimize=2
+%{__python2} setup.py install --root=%{buildroot} --compile --optimize=2
 rm -rf %{buildroot}}%{py2_platsitedir}/reportlab/fonts
 
 %files
