@@ -1,7 +1,7 @@
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
 Version:	2.6
-Release:	8
+Release:	9
 License:	BSD
 Group:		Publishing
 Url:		http://www.reportlab.org/
@@ -13,7 +13,7 @@ Source0:	http://www.reportlab.org/ftp/reportlab-%{version}.tar.gz
 # fonts - AdamW 2008/02
 Patch1:		reportlab-2.5-fix_build.patch
 BuildRequires:	pkgconfig(freetype2)
-BuildRequires:  python-devel
+BuildRequires:  pkgconfig(python2)
 
 %description
 ReportLab is a library that lets you directly create documents in
@@ -40,13 +40,13 @@ Sample use cases are:
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 
 %build
-python setup.py build
+%{__python2} setup.py build
 
 %install
-python setup.py install --root=%{buildroot} --compile --optimize=2
-rm -rf %{buildroot}}%{py_platsitedir}/reportlab/fonts
+%{__python2}setup.py install --root=%{buildroot} --compile --optimize=2
+rm -rf %{buildroot}}%{py2_platsitedir}/reportlab/fonts
 
 %files
 %doc LICENSE.txt README.txt
-%{py_platsitedir}/*
+%{py2_platsitedir}/*
 
