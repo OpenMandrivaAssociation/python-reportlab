@@ -1,13 +1,11 @@
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
-Version:	3.3.0
-Release:	2
+Version:	3.4.0
+Release:	1
 License:	BSD
 Group:		Publishing
-Url:		http://www.reportlab.org/
-# Upstream tarball with Odyssey text and non-free font files replaced
-# Changes copied from Debian package - AdamW 2008/02
-Source0:	http://www.reportlab.org/ftp/reportlab-%{version}.tar.gz
+Url:		https://pypi.python.org/pypi/reportlab
+Source0:	https://pypi.python.org/packages/87/f9/53b34c58d3735a6df7d5c542bf4de60d699cfa6035e113ca08b3ecdcca3f/reportlab-%{version}.tar.gz
 #Source1:	rl_accel-0.61-daily-unix.tgz
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:  pkgconfig(python2)
