@@ -55,7 +55,7 @@ Sample use cases are:
 
 %prep
 %setup -qn reportlab-%{version}
-%apply_patches
+%autopatch -p1
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 cd ..
 cp -a reportlab-%{version} %py3dir
