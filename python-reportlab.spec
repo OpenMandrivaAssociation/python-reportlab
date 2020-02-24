@@ -1,12 +1,13 @@
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
 Version:	3.5.23
-Release:	5
+Release:	6
 License:	BSD
 Group:		Publishing
 Url:		https://pypi.python.org/pypi/reportlab
 Source0:	https://files.pythonhosted.org/packages/41/93/c57ed3f33daabaad2146504d888ea77c44d35fa57bf844342a70f4593007/reportlab-3.5.23.tar.gz
 #Source1:	rl_accel-0.61-daily-unix.tgz
+Patch0:		reportlab-3.5.23-no-Lusrlib.patch
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:  pkgconfig(python2)
 BuildRequires:	pkgconfig(python3)
@@ -54,8 +55,7 @@ Sample use cases are:
   * from XML to PDF in one step
 
 %prep
-%setup -qn reportlab-%{version}
-%autopatch -p1
+%autosetup -p1 -n reportlab-%{version}
 find . -type f | xargs perl -p -i -e 's@#!/bin/env python@#!/usr/bin/env python@'
 cd ..
 cp -a reportlab-%{version} %py3dir

@@ -1,0 +1,18 @@
+diff -up reportlab-3.5.23/setup.py.omv~ reportlab-3.5.23/setup.py
+--- reportlab-3.5.23/setup.py.omv~	2020-02-24 19:58:34.920588370 +0100
++++ reportlab-3.5.23/setup.py	2020-02-24 19:59:22.149587681 +0100
+@@ -175,13 +175,9 @@ class inc_lib_dirs:
+                 # darwin ports installation directories
+                 aDir(L, "/opt/local/lib")
+                 aDir(I, "/opt/local/include")
+-            aDir(I, "/usr/local/include")
+-            aDir(L, "/usr/local/lib")
+-            aDir(I, "/usr/include")
+-            aDir(L, "/usr/lib")
+             aDir(I, "/usr/include/freetype2")
+             prefix = sysconfig.get_config_var("prefix")
+-            if prefix:
++            if prefix and prefix != '/usr' and prefix != '/usr/local':
+                 aDir(L, pjoin(prefix, "lib"))
+                 aDir(I, pjoin(prefix, "include"))
+             self.L=L
