@@ -1,16 +1,13 @@
-%global module reportlab
-%global mod %(m=%{module}; echo ${m:0:1})
-
 %global cmapdir %(echo `rpm -qls ghostscript-common | grep CMap | awk '{print $2}'`)
 
 Summary:	ReportLab library to create PDF documents using Python
-Name:		python-%{module}
-Version:	3.6.11
+Name:		python-reportlab
+Version:	3.6.12
 Release:	1
 License:	BSD and GPLv2+
 Group:		Publishing
 URL:		https://www.reportlab.com/opensource/
-Source0:	https://pypi.io/packages/source/%{mod}/%{module}/%{module}-%{version}.tar.gz
+Source0:	https://pypi.io/packages/source/r/reportlab/reportlab-%{version}.tar.gz
 #Source1:	rl_accel-0.61-daily-unix.tgz
 #Patch0:		reportlab-3.5.23-no-Lusrlib.patch
 BuildRequires:	fontpackages-devel
@@ -42,8 +39,8 @@ Sample use cases are:
 %files
 %license LICENSE.txt
 %doc README.txt CHANGES.md
-%{python3_sitearch}/%{module}
-%{python3_sitearch}/%{module}-%{version}-py%{python3_version}.egg-info
+%{python3_sitearch}/reportlab
+%{python3_sitearch}/reportlab-%{version}*-info
 
 #---------------------------------------------------------------------------
 
