@@ -1,8 +1,6 @@
-%global cmapdir %(echo `rpm -qls ghostscript-common | grep CMap | awk '{print $2}'`)
-
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
-Version:	4.0.0
+Version:	4.0.4
 Release:	1
 License:	BSD and GPLv2+
 Group:		Publishing
@@ -10,12 +8,17 @@ URL:		https://www.reportlab.com/opensource/
 Source0:	https://pypi.io/packages/source/r/reportlab/reportlab-%{version}.tar.gz
 #Source1:	rl_accel-0.61-daily-unix.tgz
 #Patch0:		reportlab-3.5.23-no-Lusrlib.patch
-BuildRequires:	fontpackages-devel
-BuildRequires:	ghostscript
-BuildRequires:	pkgconfig(freetype2)
-BuildRequires:	pkgconfig(libart-2.0)
+#BuildRequires:	fontpackages-devel
+#BuildRequires:	ghostscript
+#BuildRequires:	pkgconfig(freetype2)
+#BuildRequires:	pkgconfig(libart-2.0)
 BuildRequires:	pkgconfig(python3)
+BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
+BuildRequires:	python%{pyver}dist(wheel)
+
 BuildRequires:	font(dejavusans)
+BuildArch:      noarch
 
 %description
 ReportLab is a library that lets you directly create documents in
@@ -37,47 +40,38 @@ Sample use cases are:
   * from XML to PDF in one step
 
 %files
-%license LICENSE.txt
+%license LICENSE
 %doc README.txt CHANGES.md
-%{python3_sitearch}/reportlab
-%{python3_sitearch}/reportlab-%{version}*-info
+%{py_puresitedir}/reportlab
+%{py_puresitedir}/reportlab-%{version}*-info
 
 #---------------------------------------------------------------------------
 
 %prep
 %autosetup -p1 -n reportlab-%{version}
 
-# remove bundled libs
-rm -rf src/rl_addons/renderPM/libart_lgpl
-
 # clean up hashbangs from libraries
 find src -name '*.py' | xargs sed -i -e '/^#!\//d'
-
-# patch the CMap path by adding Fedora ghostscript path before the match
-#sed -i '/\~\/\.local\/share\/fonts\/CMap/i''\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ '\'%{cmapdir}\''\,' src/reportlab/rl_settings.py
 
 # drop bundled egg-info
 rm -rf src/reportlab.egg-info/
 
 %build
-CFLAGS="%{build_cflags} -Isrc/rl_addons/renderPM `pkg-config --cflags libart-2.0`" \
-%__python3 setup.py build -- --use-system-libart --no-download-t1-files
+%py_build -- --no-download-t1-files
 
 %install
-CFLAGS="%{build_cflags} -Isrc/rl_addons/renderPM `pkg-config --cflags libart-2.0`" \
-%{__python} setup.py  install -O1 --skip-build --root %{buildroot} --use-system-libart --no-download-t1-files
-
-#rm -rf %{buildroot}}%{py2_platsitedir}/reportlab/fonts
+%py_install
 
 # Unbundled fonts
-ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Regular") %{buildroot}%{python3_sitearch}/reportlab/fonts/Vera.ttf
-ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Bold Oblique") %{buildroot}%{python3_sitearch}/reportlab/fonts/VeraBI.ttf
-ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Bold") %{buildroot}%{python3_sitearch}/reportlab/fonts/VeraBd.ttf
-ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Condensed Oblique") %{buildroot}%{python3_sitearch}/reportlab/fonts/VeraIt.ttf
-
-# remove license
+#rm -rf %{buildroot}%{py_puresitedir}/reportlab/fonts
+install -dpm 0755 %{buildroot}%{py_puresitedir}/reportlab/fonts
+ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Regular") %{buildroot}%{py_puresitedir}/reportlab/fonts/Vera.ttf
+ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Bold Oblique") %{buildroot}%{py_puresitedir}/reportlab/fonts/VeraBI.ttf
+ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Bold") %{buildroot}%{py_puresitedir}/reportlab/fonts/VeraBd.ttf
+ln -sf $(fc-match -f "%{file}" "DejaVu Sans:style=Condensed Oblique") %{buildroot}%{py_puresitedir}/reportlab/fonts/VeraIt.ttf
 rm -f %{buildroot}%{python3_sitearch}/reportlab/fonts/bitstream-vera-license.txt
 
 # add resources
-cp -a demos %{buildroot}%{python3_sitearch}/reportlab/
-cp -a tools %{buildroot}%{python3_sitearch}/reportlab/
+cp -a demos %{buildroot}%{py_puresitedir}/reportlab/
+cp -a tools %{buildroot}%{py_puresitedir}/reportlab/
+
