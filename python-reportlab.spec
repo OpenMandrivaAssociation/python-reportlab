@@ -1,6 +1,6 @@
 Summary:	ReportLab library to create PDF documents using Python
 Name:		python-reportlab
-Version:	4.4.6
+Version:	5.0.0
 Release:	1
 License:	BSD and GPLv2+
 Group:		Publishing
@@ -48,7 +48,7 @@ Sample use cases are:
 #---------------------------------------------------------------------------
 
 %prep
-%autosetup -p1 -n reportlab-%{version}
+%autosetup -p1 -n reportlab-5.0.0
 
 # clean up hashbangs from libraries
 find src -name '*.py' | xargs sed -i -e '/^#!\//d'
